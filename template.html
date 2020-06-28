@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Billing invoice | powered by Bentura technologies</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="./css/invoice.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> -->
+    <style>
+      .scrollhide{
+        overflow-y: scroll;
+      }
+      .scrollhide::-webkit-scrollbar{
+        display: none
+      }
+    </style>
+  </head>
+  <body class="scrollhide" onkeydown="myF(event)" style="padding: 0.5vw;">
+    <div class="container">
+      <table border="1" style="max-height: 900px;table-layout: fixed;">
+        <thead>
+          <!-- <tr>
+            <th colspan="2"  style="padding: 10px 20px;border-right: rgba(0,0,0,0)">
+              <span style="font-size: 25px;" id="productTitle" onclick="changeProduct()"><b>HALEEMA APPARELS</b></span
+              ><br />
+              <span style="font-weight: 50;font-size: medium;"
+                >Karukadam P.O, Kothamangalam,<br />
+                Ernakulam, Kerala - 686691.<br />
+                Phone : 8714 42 9816</span
+              >
+              <br />
+              <h6>GSTIN : 32AREPJ9558P1Z4</h6>
+            </th>
+            <th colspan="11" style="padding: 20px 20px;text-align: center;vertical-align: bottom;border-left: rgba(0,0,0,0);border-right: rgba(0,0,0,0)">TAX INVOICE [CASH/CREDIT]</th>
+            <th colspan="2" style="text-align: center;border-left: rgba(0,0,0,0)">
+              <img src="./logo.jpg" style="width: 150px;" id="productLogo"/>
+            </th>
+          </tr> -->
+          <tr>
+            <th colspan="2" style="padding: 10px 20px;border-right: rgba(0,0,0,0);width: 25%;">
+              <div style="width: 100%;">
+              <span style="font-weight: 50;font-size: medium;"
+                >Buyer :</span>
+                <span style="font-weight: 50;font-size: medium;" id="name"> </span><br>
+                <span style="font-weight: 50;font-size: medium;word-break:break-all ;" id="address1"></span><br>
+                <!-- <span style="font-weight: 50;font-size: medium;" id="address2"></span> -->
+                <br /><span style="font-weight: 50;font-size: medium;">PHONE : </span> <span style="font-weight: 50;font-size: medium;" id="phone">9744189033<br/></span>
+              <!-- <h6>GSTIN : <span id="gstin"></span></h6> -->
+              </div>
+            </th>
+            <th colspan="11" style="height: auto;width: 50%;border-left: rgba(0,0,0,0);border-right: rgba(0,0,0,0);text-align: center;">
+                <img onclick="changeProduct()" src="./logo.jpg" style="width: 250px;" id="productLogo"/><br>
+                <a><span style="font-weight: 50;font-size: medium;" >8714 42 9816</span></a>
+            </th>
+            <th colspan="2" style="padding: 10px 20px;border-left: rgba(0,0,0,0);width: 25%;">
+              <span style="font-weight: 50;font-size: medium;">
+                Invoice No : <span style="font-weight: 50;font-size: medium;" id="invoice"></span><br />
+                Date : <span style="font-weight: 50;font-size: medium;" id="date"></span><br />
+                Despatch Through : DIRECT<br />
+                Destination :<span style="font-weight: 50;font-size: medium;" id="destination"></span></span
+              >
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="15">
+              <table border="1">
+                <tr>
+                  <table border="1" style="min-height: 450px;width: 100%;" cellpadding="0">
+                    <thead>
+                      <tr style="height: 20px;">
+                        <th>No</th>
+                        <th>Item/ Design</th>
+                        <th>HSN Code</th>
+                        <th>Size 28/70</th>
+                        <th>Size 30/75</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;"> 75/45</div> 32/80</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;">80/50 </div>34/85</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;">85/55 </div>36/90</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;">90/60 </div>38/95</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;">95/65 </div>40/100</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;">100/70</div>42/105</th>
+                        <th><div style="border-bottom: 0.5px solid black;width: 100%;">105/75</div>44/110</th>
+                        <th>Qty</th>
+                        <th>Itm Rate</th>
+                        <th>Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody id="table">
+                      
+                    </tbody>
+                  </table>
+                </tr>
+                <tr style="border-bottom: rgba(0,0,0,0);">
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)">DEALERS : </td>
+<td colspan="6" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"> </td>
+<td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">CROSBE </td>
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">Total Quantity </td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" style="border-left: rgba(0,0,0,0);text-align: right;" id=tqty></td>
+                </tr>
+                <tr style="border-bottom: rgba(0,0,0,0)">
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)"></td>
+<td colspan="6" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"> </td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">BEAUTYCUTY</td>                  
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">Sub Total :</td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" id="subtotal" style="border-left: rgba(0,0,0,0);text-align: right;"></td>
+                </tr>
+                <tr style="border-bottom: rgba(0,0,0,0);">
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)"></td>
+                  <td colspan="6" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"> </td>
+<td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">LADYMARVEL</td>                  
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">Cash Discount</td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" style="border-left: rgba(0,0,0,0);text-align: right;" id="discount">0</td>
+                </tr>
+                <!-- <tr style="border-bottom: rgba(0,0,0,0);">
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)"></td>
+                  <td colspan="7" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"></td>                  
+<td colspan="3" style="border-left: rgba(0,0,0,0);border-right: rgba(0,0,0,0)">CGST<span id="cgstVal"></span></td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" id="cgst" style="border-left: rgba(0,0,0,0);text-align: right;"></td>
+                </tr>
+                <tr style="border-bottom: rgba(0,0,0,0);">
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)"></td>
+                  <td colspan="7" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"></td>                  
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">SGST<span id="sgstVal"></span></td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" style="border-left: rgba(0,0,0,0);text-align: right;" id="sgst"></td>
+                </tr>
+                <tr style="border-bottom: rgba(0,0,0,0);">
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)"></td>
+                  <td colspan="7" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"></td>                  
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">IGST</td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" style="border-left: rgba(0,0,0,0);text-align: right;"></td>
+                </tr>
+                <tr >
+                  <td colspan="1" style="border-right: rgba(0,0,0,0)"></td>
+                  <td colspan="7" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"></td>                  
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)">TOTAL GST</td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" style="border-left: rgba(0,0,0,0);text-align: right;" id="tgst"></td>
+                </tr> -->
+                <!-- <tr>
+                  <td colspan="10"></td>
+                  <td colspan="3">ROUND OFF</td>
+                  <td colspan="2">731</td>
+                </tr> -->
+                <tr>
+                  <td colspan="1" style="margin-left: 20px;border-right: rgba(0,0,0,0)">
+                    AMOUNT IN WORDS :
+                  </td>
+                  <td colspan="7" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0)"><span style="font-weight: 50;font-size: medium;"
+                     id="taw" ></span
+                    ></td>                  
+<td colspan="3" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);font-weight: bold;">NET TOTAL</td>
+                  <td colspan="1" style="border-right: rgba(0,0,0,0);border-left: rgba(0,0,0,0);text-align: center;">: </td>
+                  <td colspan="3" style="border-left: rgba(0,0,0,0);text-align: right;font-weight: bold"  id="total"></td>
+                </tr>
+                <!-- <tr>
+                  <td colspan="3" style="padding: 10px 20px;">
+                    COMPANY BANK DETAILS <br />
+                    <span style="font-weight: 50;font-size: medium;"
+                      >BANK: UNION BANK OF INDIA<br />
+                      BRANCH : KOTHAMANGALAM<br />
+                      A/C NO: 337601010018008<br />
+                      IFSC CODE: UBIN0533769</span
+                    >
+                  </td>
+                  <td
+                    colspan="6"
+                    style="padding: 10px 20px;vertical-align: top;text-align: center;"
+                  >
+                    CUSTOMER SEAL & SIGN
+                  </td>
+                  <td
+                    colspan="6"
+                    style="padding: 10px 20px;text-align: center;vertical-align: top;"
+                  >
+                    FOR S&G APPEAL <br /><br /><br /><br />
+                    AUTHORISED SIGN
+                  </td>
+                </tr> -->
+              </table>
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      function myF(event) {
+        if (event.keyCode === 80) {
+var invoice=window.localStorage.getItem("invoiceNum");
+if(invoice==undefined || invoice == null || invoice == 0 ) invoice = 1
+else invoice = parseInt(invoice)+1
+       window.localStorage.setItem("invoiceNum", invoice);
+       window.print();
+}
+        else if (event.keyCode === 27)  window.close();
+      }
+      var u = new URL(window.location.href);
+      var itemList = u.searchParams.get("itemArray");
+      var calc=u.searchParams.get("calc")
+      var items=JSON.parse(itemList)
+      var calcs=JSON.parse(calc)
+      
+      
+      var htmlSelect ="";
+          for (i = 0; i < items.length; i++) {
+            htmlSelect +=
+              "<tr style='height: fit-content;'><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+             + items[i].num +
+            "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].n +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].h +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s1 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s2 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s3 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s4 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s5 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s6 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s7 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s8 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].s9 +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].q +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].r +
+              "</td><td style='border-bottom-color: rgba(0,0,0,0);text-align:center;font-size:medium;font-weight: 50;'>"
+              + items[i].a +
+              "</td></tr>"
+          }
+           htmlSelect+="<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>"
+          document.getElementById('table').innerHTML = htmlSelect;
+          document.getElementById('tqty').innerText=`${calcs.tqty}`
+          document.getElementById('subtotal').innerText=`₹${calcs.subtotal}`
+          // document.getElementById('cgstVal').innerText=`(${calcs.cgstVal}%)`
+          // document.getElementById('cgst').innerText=`₹${calcs.cgst}`
+          // document.getElementById('sgstVal').innerText=`(${calcs.sgstVal}%)`
+          // document.getElementById('sgst').innerText=`₹${calcs.sgst}`
+          // document.getElementById('tgst').innerText=`₹${calcs.tta}`
+          document.getElementById('taw').innerText=`${calcs.ntTOW}`
+          document.getElementById('total').innerText=`₹${calcs.ntTOTL}`
+          document.getElementById('name').innerText=`${calcs.name}`
+          document.getElementById('address1').innerText=`${calcs.address1}`
+          document.getElementById('destination').innerText=`${calcs.destination}`
+          document.getElementById('phone').innerText=`${calcs.phone}`
+          document.getElementById('date').innerText=`${calcs.date}`
+          document.getElementById('invoice').innerText=`#${calcs.invoice}`
+          // document.getElementById('gstin').innerText=`${calcs.other}`
+          document.getElementById('discount').innerText=`${calcs.discount}%`
+        function changeProduct(){
+          if(document.getElementById('productLogo').src.match("logo2")){
+            document.getElementById('productLogo').src="./logo.jpg"
+          }else{
+            document.getElementById('productLogo').src="./logo2.jpg"
+          }
+        }
+    </script>
+  </body>
+</html>

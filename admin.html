@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0"
+    />
+    <title>Billing invoice | powered by Bentura technologies</title>
+
+    <!-- CSS  -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="css/materialize.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+    <link
+      href="css/style.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+    <style>
+      .scrollhide {
+        overflow-y: scroll;
+      }
+      .scrollhide::-webkit-scrollbar {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="scrollhide" onkeydown="myF(event)">
+    <div class="card" style="margin: 3vmax;">
+      <div class="card-content">
+        <table class="highlight" id="Table1">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>HSN</th>
+              <th>Rate</th>
+            </tr>
+          </thead>
+
+          <tbody id="tableBody">
+            <tr>
+              <td>
+                <textarea
+                  style="height: 2vmax; border-color: #0000000d; width: 21vmax;"
+                ></textarea>
+              </td>
+              <td>
+                <textarea
+                  style="height: 2vmax; width: 15vmax; border-color: #0000000d;"
+                ></textarea>
+              </td>
+
+              <td>
+                <textarea
+                  style="height: 2vmax; width: 9vmax; border-color: #0000000d;"
+                ></textarea>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="row" style="margin-top: 2vmax;">
+          <div class="col s6">
+            <button
+              type="button"
+              class="white btn-small"
+              onclick="addRowToTable()"
+            >
+              <img
+                src="./assets/add.png"
+                style="widows: 15px; height: 15px; vertical-align: middle;"
+              />
+            </button>
+            <button
+              type="button"
+              class="white btn-small"
+              onclick="removeRowFromTable()"
+            >
+              <img
+                src="./assets/remove.png"
+                style="widows: 15px; height: 15px; vertical-align: middle;"
+              />
+            </button>
+          </div>
+          <div class="col s6" style="text-align: right; padding: 0;">
+            <button
+              type="button"
+              class="white btn-small"
+              style="width: 4vmax;"
+              onclick="submitToDB()"
+            >
+              <img
+                src="./assets/submit.png"
+                style="widows: 15px; height: 15px; vertical-align: middle;"
+              />
+            </button>
+          </div>
+        </div>
+        <div class="col 12" style="text-align: center;" id="success"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin: 3vmax;">
+      <div class="card-content">
+        <table id="table2"></table>
+      </div>
+    </div>
+    <div class="fixed-action-btn" style="margin-right: 2vmax;">
+      <a class="btn-floating btn-large black" href="index.html">
+        <img
+          src="./assets/back.png"
+          style="widows: 25px; height: 25px; vertical-align: middle;"
+        />
+      </a>
+    </div>
+    <script src="js/materialize.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var elems = document.querySelectorAll(".fixed-action-btn");
+        var instances = M.FloatingActionButton.init(elems, {
+          direction: "left",
+          hoverEnabled: false,
+        });
+      });
+      function addRowToTable() {
+        var rowCount = 1;
+
+        var table = document.getElementById("Table1");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getElementsByTagName("td").length > 0) {
+            rowCount++;
+          }
+        }
+        // Create an empty <tr> element and add it to the 1st position of the table:
+        var row = table.insertRow(rowCount);
+
+        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+
+        // cell1.innerHTML = rowCount + ".";
+        cell1.innerHTML = `<td>
+                <textarea
+                  style="height: 2vmax;border-color: #0000000d;width: 21vmax;"
+                ></textarea>
+              </td>`;
+        cell2.innerHTML = `<td>
+                <textarea
+                  style=" height: 2vmax; width: 15vmax; border-color: #0000000d;"
+                ></textarea>
+              </td>`;
+        cell3.innerHTML = `<td>
+                <textarea
+                  style="height: 2vmax;width: 9vmax;border-color: #0000000d;"
+                ></textarea>
+              </td>`;
+      }
+      function removeRowFromTable() {
+        var rowCount = 0;
+        var table = document.getElementById("Table1");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getElementsByTagName("td").length > 0) {
+            rowCount++;
+          }
+        }
+        var row = rowCount > 1 && table.deleteRow(rowCount);
+      }
+      var mysql = require("mysql");
+      var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "db_invoice",
+      });
+
+      connection.connect(function (err) {
+        if (err) {
+          console.error("error connecting: ");
+          return;
+        }
+
+        console.log("connected as id ");
+        viewStock();
+      });
+      function submitToDB() {
+        var table = document.getElementById("Table1");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 1; i < rows.length; i++) {
+          let c1 = rows[i].cells[0].getElementsByTagName("textarea")[0].value;
+          let c2 = rows[i].cells[1].getElementsByTagName("textarea")[0].value;
+          let c3 = rows[1].cells[2].getElementsByTagName("textarea")[0].value;
+          if (c1 == "" || c2 == "" || c3 == "")
+            document.getElementById("success").innerHTML =
+              '<a style="color:red">Fields cannot be empty</a>';
+          else
+            connection.query(
+              "INSERT INTO `invoice` (`item`, `hsn`, `rate`) VALUES ('" +
+                c1 +
+                "', '" +
+                c2 +
+                "', '" +
+                c3 +
+                "');",
+              function (error, results, fields) {
+                if (error)
+                  document.getElementById("success").innerHTML =
+                    '<a style="color:red">Something went wrong</a>';
+                else {
+                  document.getElementById("success").innerHTML =
+                    '<a style="color:green">Item added successfully</a>';
+                  if (i == rows.length)
+                    document.getElementById("tableBody").innerHTML = `<tr>
+              <td>
+                <textarea
+                  style="height: 2vmax;border-color: #0000000d;width: 21vmax;"
+                ></textarea>
+              </td>
+              <td>
+                <textarea
+                  style=" height: 2vmax; width: 15vmax; border-color: #0000000d;"
+                ></textarea>
+              </td>
+
+              <td>
+                <textarea
+                  style="height: 2vmax;width: 9vmax;border-color: #0000000d;"
+                ></textarea>
+              </td>
+            </tr>`;
+                  viewStock();
+                }
+              }
+            );
+        }
+        setTimeout(function () {
+          document.getElementById("success").innerHTML = "";
+        }, 3000);
+      }
+      function viewStock() {
+        connection.query("SELECT * FROM `invoice`", function (e, r, f) {
+          if (e) return;
+          else {
+            var table = document.getElementById("table2");
+            table.innerHTML = `<thead>
+            <th>No.</th>
+            <th>Item</th>
+            <th>HSN</th>
+            <th>Rate</th>
+            <th>Delete</th>
+          </thead>`;
+            for (i = 0; i < r.length; i++) {
+              var row = table.insertRow();
+              row.insertCell(0).innerText = `${i + 1}.`;
+              row.insertCell(1).innerText = r[i].item;
+              row.insertCell(2).innerText = r[i].hsn;
+              row.insertCell(3).innerText = r[i].rate;
+              row.insertCell(4).innerHTML = `<button
+              type="button"
+              class="white btn-small"
+              onclick="removeItem('${r[i].item}')"
+            ><img src="./assets/delete.png" style="widows: 15px; ;height:15px ;vertical-align:middle">
+            </button>`;
+            }
+          }
+        });
+      }
+      function removeItem(item) {
+        connection.query(
+          "DELETE FROM `invoice` WHERE `item`='" + item + "'",
+          function (e, r, f) {
+            if (e) console.log(e);
+            else viewStock();
+          }
+        );
+      }
+
+      function myF(e) {
+        if (e.keyCode === 27) window.close();
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "name": "invoice",
+  "version": "1.0.0",
+  "description": "invoice app for all desktop including gst calculation",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "keywords": [
+    "ivoiceapp",
+    "gst"
+  ],
+  "author": "athul",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.1.2",
+    "electron-builder": "^22.2.0"
+  },
+  "dependencies": {
+    "mysql": "^2.17.1",
+    "swiper": "^5.2.1"
+  },
+  "build": {
+    "appId": "com.bentura.invoiceBuildPro",
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    },
+    "target": "NSIS",
+    "productName": "Invoice Builder",
+    "directories": {
+      "output": "dist"
+    }
+  }
+}
