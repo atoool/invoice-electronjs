@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1.0"
+    />
+    <title>Billing invoice | powered by Bentura technologies</title>
+
+    <!-- CSS  -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="css/materialize.css"
+      type="text/css"
+      rel="stylesheet"
+      media="screen,projection"
+    />
+  </head>
+  <style>
+    .scrollhide{
+      overflow-y: scroll;
+      padding:20px;
+    }
+    .scrollhide::-webkit-scrollbar{
+      display: none
+    }
+  </style>
+  <body class="scrollhide" onkeydown="myF(event)">
+      <div class="card ">
+        <div class="card-content">
+          <div class="col s6 right-align">
+          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="window.location.assign('./index.html')">RESET</a>
+          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="goToInvoice('p')">TAX</a>
+          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="goToInvoice('w')">NON-TAX</a>
+          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="window.open('./admin.html','admin','resizable,width= 1300,height= 800')">STOCK</a>
+        </div>
+          <div class="row">
+            <div class="col s2">
+              <img style="width:12vmax;height:8vmax" src="./logo.jpg" />
+            </div>
+            <div class="col s9 left-align">
+              <h6 style="font-weight:bold;">HALEEMA APPARELS</h6>
+              <a style="color: grey;"
+                >Karukadam P.O, Kothamangalam,<br />
+                Ernakulam, Kerala - 686691 | PHONE : 8714 42 9816</a
+              >
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6">
+              <div style="width: 7vmax;height:7vmax;">
+                <h5 style="font-weight: bold;white-space: nowrap;">
+                  TAX INVOICE
+                </h5>
+              </div>
+              <div style="line-height: 3;padding-right:12.5vmax">
+                <a style="color: #000;font-size:1.1vmax;" class="left"
+                  >GSTIN : </a
+                ><a class="right">32AREPJ9558P1Z4</a> <br />
+                <a style="color: #000;font-size:1.1vmax;" class="left"
+                  >State : </a
+                ><a class="right">Kerala</a><br />
+                <a style="color: #000;font-size:1.1vmax;" class="left"
+                  >Issue date : </a
+                >
+                
+                <input
+                  id="date"
+                  type="date"
+                  class="right"
+                  style="height:25px;width:150px"
+                />
+
+                <br />
+                <a style="color: #000;font-size:1.1vmax;" class="left" onclick="setInvoiceNum()" 
+                  >Invoice no. : <a style="color: #000;font-size:1.1vmax;" class="right">
+                  <input
+                    style="width:auto;font-size: 1vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="invoice"
+                    onchange="setInvoiceNum()"
+                  /></a><br />
+              </div>
+            </div>
+            <div class="col s6" style="margin-top:9.2vmax">
+              <a style="font-weight: bold;margin-left: 45px;">Bill To :</a
+              ><br />
+              <div class="row">
+                <form class="col s12" style="margin-left: 4.6vmax;">
+                  <div class="row">
+                    <div
+                      class="input-field col s12"
+                      style="margin-bottom: 0;margin-top: 0;"
+                    >
+                      <input
+                        id="name"
+                        class="materialize-textarea"
+                        style="margin-bottom: 0;"
+                        placeholder="Name"
+                        list="dbList"
+                        onkeypress="getDB()"
+                        onchange="selectInfo()"
+                        />
+                      
+
+                    <datalist id="dbList">
+                    </datalist>
+                    </div>
+                    <div
+                      class="input-field col s12"
+                      style="margin-bottom: 0;margin-top: 0;"
+                    >
+                      <textarea
+                        id="address1"
+                        class="materialize-textarea"
+                        style="margin-bottom: 0;"
+                        placeholder="Address"
+                      ></textarea>
+                    </div>
+                    
+                    <div
+                      class="input-field col s12"
+                      style="margin-bottom: 0;margin-top: 0;"
+                    >
+                      <textarea
+                        id="phone"
+                        class="materialize-textarea"
+                        style="margin-bottom: 0;"
+                        placeholder="Phone"
+                      ></textarea>
+                    </div>
+                    <div
+                      class="input-field col s12"
+                      style="margin-bottom: 0;margin-top: 0;"
+                    >
+                      <textarea
+                        id="other"
+                        class="materialize-textarea"
+                        style="margin-bottom: 0;"
+                        placeholder="GSTIN"
+                      ></textarea>
+                    </div>
+                    <div
+                      class="input-field col s12"
+                      style="margin-bottom: 0;margin-top: 0;"
+                    >
+                      <textarea
+                        id="destination"
+                        class="materialize-textarea"
+                        style="margin-bottom: 0;"
+                        placeholder="Destination"
+                      ></textarea>
+                    </div>
+                  </div>
+<div><button
+              type="button"
+              class="white btn-small left"
+              onclick="addInfo()"
+            >
+<span>Save</span>
+            </button>
+<div class="col 12" style="text-align: right;vertical-align:middle" id="success"></div></div>
+                </form>
+              </div>
+              <br />
+            </div>
+          </div>
+          <table class="highlight" id="Table1">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Item</th>
+                <th>HSN</th>
+                <th style="text-align: center;">
+                  Size <br />
+                  28/70
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  30/75
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  32/80
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  34/85
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  36/90
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  38/95
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  40/100
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  42/105
+                </th>
+                <th style="text-align: center;">
+                  Size <br />
+                  44/110
+                </th>
+                <th>Qty</th>
+                <th>Rate</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td>1.</td>
+                <td>
+                  <select
+                    onchange="itemSelected(1)"
+                    id="itemList1"
+                    class="browser-default"
+                  >
+                  </select>
+                </td>
+                <td></td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty11"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty12"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty13"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty14"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty15"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty16"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty17"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty18"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td>
+                  <input
+                    style="width: 4vmax;"
+                    type="number"
+                    min="1"
+                    max="1000"
+                    id="qty19"
+                    onchange="qtyChange(1)"
+                  />
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="row" style="margin-top:2vmax">
+            <button
+              type="button"
+              class="white btn-small"
+              onclick="addRowToTable()"
+            >
+              
+        <img src="./assets/add.png" style="widows: 15px; ;height:15px ;vertical-align:middle">
+            </button>
+            <button
+              type="button"
+              class="white btn-small"
+              onclick="removeRowFromTable()"
+            >
+              
+        <img src="./assets/remove.png" style="widows: 15px; ;height:15px ;vertical-align:middle">
+            </button>
+          </div>
+          <div class="row">
+            <div class="col s6 offset-s6" style="line-height:2.5em">
+              <a class="left">Total Quantity : </a
+              ><a class="right" id="tqty"></a> <br />
+              <a class="left">Subtotal : </a
+              ><a class="right" id="subtotal"></a> <br />
+              <a class="left"
+                >SGST (<input
+                  style="width: 3vmax;height: 1.4vmax;"
+                  type="number"
+                  min="1"
+                  value="2.5"
+                  max="1000"
+                  id="sgstVal"
+                  onchange="gstChange(1)"
+                />%) : </a
+              ><a class="right" id="sgst"></a>
+              <br />
+              <a class="left"
+                >CGST (<input
+                  style="width: 3vmax;height: 1.4vmax;"
+                  type="number"
+                  value="2.5"
+                  min="1"
+                  max="1000"
+                  id="cgstVal"
+                  onchange="gstChange(1)"
+                />%) : </a
+              ><a class="right" id="cgst"></a>
+              <br />
+              <a class="left">Total Tax Amount : </a
+              ><a class="right" id="tta"></a>
+              <br />
+              <a class="left"
+                >Discount (<input
+                  style="width: 3vmax;height: 1.4vmax;"
+                  type="number"
+                  min="1"
+                  value="0"
+                  max="1000"
+                  id="discountVal"
+                  onchange="gstChange()"
+                />%) : </a
+              ><a class="right" id="discount">0</a>
+              <br />
+              <div
+                style="background-color: grey;height: 2px;width: 100%;"
+              ></div>
+              <a class="left" style="font-weight: bold;">TOTAL : </a
+              ><a class="right" style="font-weight: bold;" id="total"></a>
+              <br />
+            </div>
+            <div
+              class="col s12 right"
+              style="text-align: right;line-height:2.5em"
+            >
+              <a>Total amount in words : </a>
+              <a style="margin-left: 0.2vmax;" id="taw"></a>
+              <br />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  Scripts-->
+    <!-- <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> -->
+    <script src="js/materialize.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var elems = document.querySelectorAll(".fixed-action-btn");
+        var instances = M.FloatingActionButton.init(elems, {
+          direction: "left",
+          hoverEnabled: false
+        });
+      });
+
+      function addRowToTable() {
+        var rowCount = 1;
+
+        var table = document.getElementById("Table1");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getElementsByTagName("td").length > 0) {
+            rowCount++;
+          }
+        }
+        // Create an empty <tr> element and add it to the 1st position of the table:
+        var row = table.insertRow(rowCount);
+
+        // Insert new cells (<td> elements) at the 1st and 2nd position of the "new" <tr> element:
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        var cell3 = row.insertCell(2);
+        var cell4 = row.insertCell(3);
+        var cell5 = row.insertCell(4);
+        var cell6 = row.insertCell(5);
+        var cell7 = row.insertCell(6);
+        var cell8 = row.insertCell(7);
+        var cell9 = row.insertCell(8);
+        var cell10 = row.insertCell(9);
+        var cell11 = row.insertCell(10);
+        var cell12 = row.insertCell(11);
+        var cell13 = row.insertCell(12);
+        var cell14 = row.insertCell(13);
+        var cell15 = row.insertCell(14);
+
+        cell1.innerHTML = rowCount + ".";
+        cell2.innerHTML =
+          "<select onChange='itemSelected(" +
+          rowCount +
+          ")' id='itemList" +
+          rowCount +
+          "' class='browser-default'></select>";
+        cell4.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "1' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell5.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "2' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell6.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "3' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell7.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "4' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell8.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "5' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell9.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "6' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell10.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "7' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell11.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "8' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+        cell12.innerHTML =
+          "<input style='width: 4vmax;' type='number' min='1' max='1000' id='qty" +
+          rowCount +
+          "9' onChange='qtyChange(" +
+          rowCount +
+          ")'/>";
+
+        getItemList(rowCount);
+      }
+      function removeRowFromTable() {
+        var rowCount = 0;
+        var table = document.getElementById("Table1");
+        var rows = table.getElementsByTagName("tr");
+        for (var i = 0; i < rows.length; i++) {
+          if (rows[i].getElementsByTagName("td").length > 0) {
+            rowCount++;
+          }
+        }
+        var row = rowCount > 1 && table.deleteRow(rowCount);
+      }
+      var mysql = require("mysql");
+      var connection = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "",
+        database: "db_invoice"
+      });
+
+      connection.connect(function(err) {
+        if (err) {
+          console.error("error connecting: ");
+          return;
+        }
+        console.log("connected as id ");
+        getItemList(1);
+      });
+
+      function getItemList(num) {
+        connection.query("SELECT * FROM `invoice`", function(er, res, fields) {
+          var htmlSelect =
+            "<option value='' disabled selected>Choose your option</option>";
+          for (i = 0; i < res.length; i++) {
+            htmlSelect +=
+              "<option value='" +
+              res[i].item +
+              "'>" +
+              res[i].item +
+              "</option>";
+          }
+          document.getElementById("itemList" + num).innerHTML = htmlSelect;
+        });
+      }
+      function itemSelected(num) {
+        var table = document.getElementById("Table1");
+        var row = table.rows[num];
+        var item = document.getElementById("itemList" + num).value;
+        connection.query(
+          "SELECT * FROM `invoice` WHERE item='" + item + "'",
+          function(e, r, f) {
+            row.cells[2].innerHTML = r[0].hsn;
+            row.cells[13].innerHTML = r[0].rate;
+          }
+        );
+      }
+      function qtyChange(num) {
+        var table = document.getElementById("Table1");
+        var row = table.rows[num];
+        var qValue = 0;
+        for (i = 1; i < 10; i++) {
+          qValue =
+            Number(document.getElementById(`qty${num}${i}`).value) + qValue;
+        }
+        var tqty = document.getElementById("tqty");
+        var subtotal = document.getElementById("subtotal");
+        var sgst = document.getElementById("sgst");
+        var sgstVal = document.getElementById("sgstVal").value / 100;
+        var cgst = document.getElementById("cgst");
+        var cgstVal = document.getElementById("cgstVal").value / 100;
+        var tta = document.getElementById("tta");
+        var total = document.getElementById("total");
+        var taw = document.getElementById("taw");
+        row.cells[12].innerHTML = qValue;
+        row.cells[14].innerHTML = qValue * row.cells[13].innerText;
+
+        let sTotal = 0;
+        let tqtyVal = 0;
+        for (i = 1; i < table.rows.length; i++)
+          sTotal = parseInt(table.rows[i].cells[14].innerText) + sTotal;
+        for (j = 1; j < table.rows.length; j++)
+          tqtyVal = parseInt(table.rows[j].cells[12].innerText) + tqtyVal;
+        tqty.innerText = tqtyVal;
+        subtotal.innerHTML = sTotal;
+        sgst.innerHTML = Math.round(sgstVal * sTotal);
+        cgst.innerHTML = Math.round(cgstVal * sTotal);
+        tta.innerHTML = Math.round(sgstVal * sTotal + cgstVal * sTotal);
+        total.innerHTML = Math.round(
+          sTotal + sgstVal * sTotal + cgstVal * sTotal
+        );
+        taw.innerHTML = inWords(
+          Math.round(sTotal + sgstVal * sTotal + cgstVal * sTotal)
+        );
+      }
+      function gstChange() {
+        var sTotal = Number(document.getElementById("subtotal").innerText);
+        var sgst = document.getElementById("sgst");
+        var sgstVal = document.getElementById("sgstVal").value / 100;
+        var cgst = document.getElementById("cgst");
+        var cgstVal = document.getElementById("cgstVal").value / 100;
+        var tta = document.getElementById("tta");
+        var total = document.getElementById("total");
+        var taw = document.getElementById("taw");
+        sgst.innerHTML = Math.round(sgstVal * sTotal);
+        cgst.innerHTML = Math.round(cgstVal * sTotal);
+        tta.innerHTML = Math.round(sgstVal * sTotal + cgstVal * sTotal);
+        total.innerHTML = Math.round(
+          sTotal + sgstVal * sTotal + cgstVal * sTotal
+        );
+        taw.innerHTML = inWords(
+          Math.round(sTotal + sgstVal * sTotal + cgstVal * sTotal)
+        );
+        var discount = document.getElementById("discount");
+        var discountVal = document.getElementById("discountVal").value / 100;
+        discount.innerHTML=Math.round(total.innerText*discountVal)
+        total.innerHTML = Math.round(
+          total.innerText-total.innerText*discountVal
+        );
+        taw.innerHTML = inWords(
+          Math.round(total.innerText-total.innerText*discountVal)
+        );
+      }
+      
+      var a = [
+        "",
+        "one ",
+        "two ",
+        "three ",
+        "four ",
+        "five ",
+        "six ",
+        "seven ",
+        "eight ",
+        "nine ",
+        "ten ",
+        "eleven ",
+        "twelve ",
+        "thirteen ",
+        "fourteen ",
+        "fifteen ",
+        "sixteen ",
+        "seventeen ",
+        "eighteen ",
+        "nineteen "
+      ];
+      var b = [
+        "",
+        "",
+        "twenty",
+        "thirty",
+        "forty",
+        "fifty",
+        "sixty",
+        "seventy",
+        "eighty",
+        "ninety"
+      ];
+
+      function inWords(num) {
+        if (num.toLocaleString().length > 9) return "overflow";
+        n = ("000000000" + num)
+          .substr(-9)
+          .match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+        if (!n) return;
+        var str = "";
+        str +=
+          n[1] != 0
+            ? (a[Number(n[1])] || b[n[1][0]] + " " + a[n[1][1]]) + "crore "
+            : "";
+        str +=
+          n[2] != 0
+            ? (a[Number(n[2])] || b[n[2][0]] + " " + a[n[2][1]]) + "lakh "
+            : "";
+        str +=
+          n[3] != 0
+            ? (a[Number(n[3])] || b[n[3][0]] + " " + a[n[3][1]]) + "thousand "
+            : "";
+        str +=
+          n[4] != 0
+            ? (a[Number(n[4])] || b[n[4][0]] + " " + a[n[4][1]]) + "hundred "
+            : "";
+        str +=
+          n[5] != 0
+            ? (str != "" ? "and " : "") +
+              (a[Number(n[5])] || b[n[5][0]] + " " + a[n[5][1]]) +
+              "only "
+            : "";
+        return str;
+      }
+
+      function goToInvoice(invo) {
+        var rows = document.getElementById("Table1").rows;
+        var itemArray = [];
+        for (i = 1; i < rows.length; i++) {
+          var num = rows[i].cells[0].innerText;
+          var n = document.getElementById("itemList" + i).value;
+          var h = rows[i].cells[2].innerText;
+          var s1 = document.getElementById(`qty${i}1`).value;
+          var s2 = document.getElementById(`qty${i}2`).value;
+          var s3 = document.getElementById(`qty${i}3`).value;
+          var s4 = document.getElementById(`qty${i}4`).value;
+          var s5 = document.getElementById(`qty${i}5`).value;
+          var s6 = document.getElementById(`qty${i}6`).value;
+          var s7 = document.getElementById(`qty${i}7`).value;
+          var s8 = document.getElementById(`qty${i}8`).value;
+          var s9 = document.getElementById(`qty${i}9`).value;
+          var q = rows[i].cells[12].innerText;
+          var r = rows[i].cells[13].innerText;
+          var a = rows[i].cells[14].innerText;
+          var itms = {
+            num: num,
+            n: n,
+            h: h,
+            s1: s1,
+            s2: s2,
+            s3: s3,
+            s4: s4,
+            s5: s5,
+            s6: s6,
+            s7: s7,
+            s8: s8,
+            s9: s9,
+            q: q,
+            r: r,
+            a: a
+          };
+          itemArray.push(itms);
+        }
+        var tqty = document.getElementById("tqty").innerText;
+        var subtotal = document.getElementById("subtotal").innerText;
+        var sgst = document.getElementById("sgst").innerText;
+        var sgstVal = document.getElementById("sgstVal").value;
+        var cgst = document.getElementById("cgst").innerText;
+        var cgstVal = document.getElementById("cgstVal").value;
+        var discount=document.getElementById('discountVal').value;
+        var tta = document.getElementById("tta").innerText;
+        var total = document.getElementById("total").innerText;
+        var taw = document.getElementById("taw").innerText;
+        var name = document.getElementById("name").value;
+        var address1 = document.getElementById("address1").value;
+        var destination = document.getElementById("destination").value;
+        var phone = document.getElementById("phone").value;
+        var other = document.getElementById("other").value;
+        var date = document.getElementById("date").value;
+        var invoice = document.getElementById("invoice").value;
+        var calc = {
+          tqty,
+          subtotal,
+          sgst,
+          sgstVal,
+          cgst,
+          cgstVal,
+          discount,
+          tta,
+          total,
+          taw,
+          name,
+          address1,
+          destination,
+          phone,
+          other,
+          date,invoice,ntTOTL:0,ntTOW:''
+        };
+        if(total===''||total==0||tqty==''||tqty==0) alert('Some fields are empty')
+        else if(invo=='p')
+        window.open(`./invoice.html?itemArray=${JSON.stringify(
+          itemArray
+        )}&calc=${JSON.stringify(calc)}`, "newWin", "width="+screen.availWidth+",height="+screen.availHeight,
+        'invoice','resizable,width= 1300,height= 800')
+        else{
+          var ntTOTL=0
+      if(discount=='' || discount==0)
+      ntTOTL=subtotal
+      else
+      ntTOTL=subtotal-subtotal*(discount/100)
+      var ntTOW=inWords(ntTOTL)
+      calc.ntTOTL=ntTOTL
+      calc.ntTOW=ntTOW
+        window.open(`./template.html?itemArray=${JSON.stringify(
+          itemArray
+        )}&calc=${JSON.stringify(calc)}`, "newWin", "width="+screen.availWidth+",height="+screen.availHeight,
+        'invoice','resizable,width= 1300,height= 800')
+      }}
+      function setInvoiceNum() {
+        var invoice=document.getElementById(
+        "invoice"
+      ).value
+        window.localStorage.setItem("invoiceNum", invoice);
+      }
+      document.getElementById(
+        "invoice"
+      ).value = window.localStorage.getItem("invoiceNum");
+      function myF(e) {
+        if (e.altKey && e.keyCode == 84 ) goToInvoice('p')
+        else if(e.altKey && e.keyCode == 87 ) goToInvoice('w')
+        else if(e.altKey && e.keyCode == 83 ) window.open('./admin.html','admin','resizable,width= 1300,height= 800')
+        else if(e.altKey && e.keyCode == 82 ) window.location.assign('./index.html')
+      }
+      function getDB(){
+var text=document.getElementById('name').value
+ connection.query("SELECT name FROM `cust` WHERE name LIKE "+`'%${text}%'`, function(e, r, f) {
+          if(e) return
+          else{
+            var htmlSelect ="";
+          for (i = 0; i < r.length; i++) {
+            htmlSelect +=
+              "<option value='" +
+              r[i].name +
+              "'>" 
+          }
+          document.getElementById("dbList").innerHTML=htmlSelect
+          }
+        })
+      }
+      function selectInfo(){
+var text=document.getElementById('name').value
+        connection.query("SELECT * FROM `cust` WHERE name="+`'${text}'`,function(e,r,f){
+          if(e) return
+          else {
+           document.getElementById("address1").value=r[0].address
+           document.getElementById("destination").value=r[0].dest
+           document.getElementById("phone").value=r[0].phone
+           document.getElementById("other").value=r[0].gstin
+          }
+        })
+      }
+      function addInfo(){
+        var success= document.getElementById('success')
+        var name = document.getElementById("name").value;
+        var addr = document.getElementById("address1").value;
+        var dest = document.getElementById("destination").value;
+        var phon = document.getElementById("phone").value;
+        var gstn = document.getElementById("other").value;
+        if(name.length!=0)
+        connection.query("INSERT INTO `cust`(`name`, `address`, `dest`, `phone`, `gstin`) VALUES ('"+name+"','"+addr+"','"+dest+"','"+phon+"','"+gstn+"')",function(e,r,f){
+if(e){ 
+  if(e.toString().indexOf('ER_DUP_ENTRY')!=-1)
+  success.innerHTML=`<a style="color:red">failed! Name already is in db</a>`
+  else
+  success.innerHTML=`<a style="color:red">failed!</a>`
+}else{
+ success.innerHTML='<a style="color:green">success</a>'
+}
+        })
+        else  success.innerHTML='<a style="color:red">fields cannot be empty</a>'
+        setTimeout(function() {
+          success.innerHTML= "";
+        }, 3000);
+      }
+      window.addEventListener('storage', function(e) {  
+        window.location.reload()
+});
+document.getElementById('date').valueAsDate=new Date()
+    </script>
+    <!-- <script src="js/init.js"></script> -->
+  </body>
+</html>
