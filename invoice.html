@@ -21,9 +21,9 @@
       }
     </style>
   </head>
-  <body class="scrollhide" onkeydown="myF(event)" style="padding: 0.5vw;">
-    <div class="container">
-      <table border="1" style="height: 900px;table-layout: fixed;">
+  <body class="scrollhide" onkeydown="myF(event)" style="padding: 0.5vw;width: 100%;">
+    <div  style="align-self: center;">
+      <table align="center" border="1" style="height: 900px;align-self: center;">
         <thead>
           <tr>
             <th colspan="2"  style="padding: 10px 20px;border-right: rgba(0,0,0,0)">
@@ -70,7 +70,7 @@
             <td colspan="15">
               <table border="1">
                 <tr style="align-items: center;">
-                  <table border="1" style="min-height: 750px;width: 100%;" cellpadding="0">
+                  <table border="1" style="min-height: 820px;width: 100%;" cellpadding="0">
                     <thead>
                       <tr style="height: 20px;">
                         <th>No</th>
@@ -195,7 +195,7 @@
     </div>
     <script>
       function myF(event) {
-        if (event.keyCode === 112) {
+        if (event.keyCode === 80) {
 var invoice=window.localStorage.getItem("invoiceNum");
 if(invoice==undefined || invoice == null || invoice == 0 ) invoice = 1
 else invoice = parseInt(invoice)+1

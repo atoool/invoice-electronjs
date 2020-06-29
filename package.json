@@ -15,8 +15,8 @@
   "author": "athul",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^7.1.2",
-    "electron-builder": "^22.2.0"
+    "electron": "^9.0.5",
+    "electron-builder": "^22.7.0"
   },
   "dependencies": {
     "mysql": "^2.17.1",
