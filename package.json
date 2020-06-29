@@ -31,6 +31,7 @@
     "target": "NSIS",
     "productName": "Invoice Builder",
     "directories": {
+      "buildResources": "resources",
       "output": "dist"
     }
   }
