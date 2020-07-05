@@ -70,11 +70,7 @@
 
         <div class="row" style="margin-top: 2vmax;">
           <div class="col s6">
-            <button
-              type="button"
-              class="white btn-small"
-              onclick="addRowToTable()"
-            >
+            <button type="button" class="btn-small" onclick="addRowToTable()">
               <img
                 src="./assets/add.png"
                 style="widows: 15px; height: 15px; vertical-align: middle;"
@@ -82,7 +78,7 @@
             </button>
             <button
               type="button"
-              class="white btn-small"
+              class="btn-small"
               onclick="removeRowFromTable()"
             >
               <img
@@ -94,7 +90,7 @@
           <div class="col s6" style="text-align: right; padding: 0;">
             <button
               type="button"
-              class="white btn-small"
+              class="btn-small"
               style="width: 4vmax;"
               onclick="submitToDB()"
             >
@@ -268,7 +264,7 @@
               row.insertCell(3).innerText = r[i].rate;
               row.insertCell(4).innerHTML = `<button
               type="button"
-              class="white btn-small"
+              class="btn-small"
               onclick="removeItem('${r[i].item}')"
             ><img src="./assets/delete.png" style="widows: 15px; ;height:15px ;vertical-align:middle">
             </button>`;

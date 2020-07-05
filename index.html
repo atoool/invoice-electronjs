@@ -19,8 +19,8 @@
       rel="stylesheet"
       media="screen,projection"
     />
-  </head>
-  <style>
+
+     <style>
     .scrollhide{
       overflow-y: scroll;
       padding:20px;
@@ -28,16 +28,55 @@
     .scrollhide::-webkit-scrollbar{
       display: none
     }
+    * {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+ul li {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block;
+  position: relative;
+}
+
+ul li:hover {
+  background-color: #eee;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  right: 0%;
+  padding: 12px 16px;
+  transform: translate(0%, -50%);
+}
+
+.close:hover {background: #bbb;}
   </style>
+  </head>
   <body class="scrollhide" onkeydown="myF(event)">
       <div class="card ">
         <div class="card-content">
-          <div class="col s6 right-align">
-          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="window.location.assign('./index.html')">RESET</a>
-          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="goToInvoice('p')">TAX</a>
-          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="goToInvoice('w')">NON-TAX</a>
-          <a class="waves-effect waves-light btn" style="margin-right: 10px;background-color: #e8e4e1;" onclick="window.open('./admin.html','admin','resizable,width= 1300,height= 800')">STOCK</a>
+          <div style="display: flex;width: 100%;justify-content: flex-end" class="col s6 right-align">
+          <div class="col s6 center card " style="padding: 20px;width: 500px;align-self :center;">
+          <a class="white waves-effect waves-light btn" style="margin-right: 10px;" onclick="window.location.assign('./index.html')">RESET</a>
+          <a class="white waves-effect waves-light btn" style="margin-right: 10px;" onclick="goToInvoice('p')">TAX</a>
+          <a class="white waves-effect waves-light btn" style="margin-right: 10px;" onclick="goToInvoice('w')">NON-TAX</a>
+          <a class="white waves-effect waves-light btn" style="margin-right: 10px;" onclick="window.open('./admin.html','admin','resizable,width= 1300,height= 800')">STOCK</a>
         </div>
+      </div>
           <div class="row">
             <div class="col s2">
               <img style="width:12vmax;height:8vmax" src="./logo.jpg" />
@@ -104,8 +143,8 @@
                         style="margin-bottom: 0;"
                         placeholder="Name"
                         list="dbList"
-                        onkeypress="getDB()"
-                        onchange="selectInfo()"
+                        onkeydown="getDB(value)"
+                        onchange="selectInfo(value)"
                         />
                       
 
@@ -160,11 +199,19 @@
                   </div>
 <div><button
               type="button"
-              class="white btn-small left"
+              class=" btn-small left"
               onclick="addInfo()"
             >
 <span>Save</span>
             </button>
+            <button
+            style="margin-left: 20px;"
+            type="button"
+            class=" btn-small left"
+            onclick="removeInfo()"
+          >
+<span>Remove</span>
+          </button>
 <div class="col 12" style="text-align: right;vertical-align:middle" id="success"></div></div>
                 </form>
               </div>
@@ -226,6 +273,8 @@
                   <select
                     onchange="itemSelected(1)"
                     id="itemList1"
+                    onclick="getItemList(1)"
+                onkeydown="callback(event,1)"
                     class="browser-default"
                   >
                   </select>
@@ -331,7 +380,7 @@
           <div class="row" style="margin-top:2vmax">
             <button
               type="button"
-              class="white btn-small"
+              class="btn-small"
               onclick="addRowToTable()"
             >
               
@@ -339,7 +388,7 @@
             </button>
             <button
               type="button"
-              class="white btn-small"
+              class="btn-small"
               onclick="removeRowFromTable()"
             >
               
@@ -454,7 +503,7 @@
 
         cell1.innerHTML = rowCount + ".";
         cell2.innerHTML =
-          "<select onChange='itemSelected(" +
+          "<select onclick='getItemList("+rowCount+")' onkeydown='callback(event,"+rowCount+")' onChange='itemSelected(" +
           rowCount +
           ")' id='itemList" +
           rowCount +
@@ -540,7 +589,7 @@
           console.error("error connecting: ");
           return;
         }
-        console.log("connected as id ");
+        console.log("connection successfull");
         getItemList(1);
       });
 
@@ -813,8 +862,7 @@
         else if(e.altKey && e.keyCode == 83 ) window.open('./admin.html','admin','resizable,width= 1300,height= 800')
         else if(e.altKey && e.keyCode == 82 ) window.location.assign('./index.html')
       }
-      function getDB(){
-var text=document.getElementById('name').value
+      function getDB(text){
  connection.query("SELECT name FROM `cust` WHERE name LIKE "+`'%${text}%'`, function(e, r, f) {
           if(e) return
           else{
@@ -829,17 +877,37 @@ var text=document.getElementById('name').value
           }
         })
       }
-      function selectInfo(){
-var text=document.getElementById('name').value
+      function selectInfo(text){
         connection.query("SELECT * FROM `cust` WHERE name="+`'${text}'`,function(e,r,f){
           if(e) return
           else {
            document.getElementById("address1").value=r[0].address
-           document.getElementById("destination").value=r[0].dest
+           document.getElementById("destination").textContent=r[0].dest
            document.getElementById("phone").value=r[0].phone
            document.getElementById("other").value=r[0].gstin
           }
         })
+      }
+      function removeInfo(){
+        var success= document.getElementById('success')
+        var name = document.getElementById("name").value;
+        if(name.length!=0)
+        connection.query("DELETE FROM `cust` WHERE name='"+name+"'",function(e,r,f){
+if(e||r.affectedRows==0){
+  success.innerHTML=`<a style="color:red">failed!</a>`
+}else{
+        document.getElementById("name").value=""
+        document.getElementById("address1").value=""
+        document.getElementById("destination").value=""
+        document.getElementById("phone").value=""
+        document.getElementById("other").value=""
+ success.innerHTML='<a style="color:green">Deleted successfully</a>'
+}
+        })
+        else  success.innerHTML='<a style="color:red">fields cannot be empty</a>'
+        setTimeout(function() {
+          success.innerHTML= "";
+        }, 3000);
       }
       function addInfo(){
         var success= document.getElementById('success')
@@ -868,6 +936,10 @@ if(e){
         window.location.reload()
 });
 document.getElementById('date').valueAsDate=new Date()
+function callback(e,num){
+  if(e.keyCode==32||e.keyCode==13||e.keyCode==40||e.keyCode==38)
+  getItemList(num)
+}
     </script>
     <!-- <script src="js/init.js"></script> -->
   </body>
