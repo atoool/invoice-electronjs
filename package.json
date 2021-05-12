@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "mysql": "^2.17.1",
-    "swiper": "^5.2.1"
+    "swiper": "^6.5.1"
   },
   "build": {
     "appId": "com.bentura.invoiceBuildPro",
